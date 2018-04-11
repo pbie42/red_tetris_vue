@@ -1,0 +1,108 @@
+.home
+	height: 100vh
+	width: 100vw
+	display: flex
+	flex-flow: column
+	justify-content: space-around
+	align-items: center
+
+	> div
+		&:first-of-type
+			height: 20vh
+			width: 100vw
+			display: flex
+			justify-content: flex-start
+			> div
+				height: 20vh
+				width: 75vw
+				// background-color: rgba(252, 247, 247, 0.50)
+				border-radius: 1rem
+				display: flex
+				justify-content: center
+				h1
+					padding-top: 7rem
+					font-size: 6rem
+					color: #fff
+					font-family: 'Press Start 2P', cursive
+					animation: neonRed 1.5s ease-in-out infinite alternate
+		&:last-of-type
+			height: 20vh
+			width: 100vw
+			border-radius: 1.5rem
+			display: flex
+			justify-content: flex-end
+			> div
+				height: 20vh
+				width: 70vw
+				// background-color: rgba(252, 247, 247, 0.50)
+				color: white
+				display: flex
+				flex-flow: column
+				justify-content: center
+				align-items: center
+				border-top-left-radius: 1rem
+				border-bottom-left-radius: 1rem
+
+				form
+					> div
+						height: 1rem
+						width: 25rem
+						border-left: 0.2rem solid white
+						border-right: 0.2rem solid white
+						border-bottom: 0.2rem solid white
+						border-bottom-left-radius: .5rem
+						border-bottom-right-radius: .5rem
+						input
+							transform: translateY(-1.7rem)
+							position: relative
+							border: none
+							width: 24.6rem
+							height: 2.5rem
+							background-color: black
+							border-bottom-left-radius: .5rem
+							border-bottom-right-radius: .5rem
+							color: white
+							font-size: 1.5rem
+							padding-left: 1rem
+							&:focus
+								outline: none
+							&::placeholder
+								transform: translateX(-1rem)
+								text-align: center
+								color: white
+								font-size: 1.5rem
+						> div
+							width: 25rem
+							display: flex
+							justify-content: flex-end
+							div
+								width: 8rem
+								cursor pointer
+								text-align: center
+								font-size: 1.5rem
+								border: 0.2rem solid white
+								border-radius: .5rem
+
+		form
+			display: flex
+			flex-flow: column
+			justify-content: center
+			align-items: center
+
+@keyframes neonRed {
+	from {
+		text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
+	}
+	to {
+		text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;
+	}
+}
+
+@keyframes neonBlue {
+	from {
+		text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #228DFF, 0 0 70px #228DFF, 0 0 80px #228DFF, 0 0 100px #228DFF, 0 0 150px #228DFF;
+	}
+	to {
+		text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+	}
+}
