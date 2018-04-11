@@ -1,5 +1,5 @@
 export const mutations = {
 	setUsername(state, username) {
-		state.user.username = username
+		if (username) state.user.username = username
 	}
 }

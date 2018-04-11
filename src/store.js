@@ -1,20 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { state } from './store/state'
+import { mutations } from './store/mutations'
 
 Vue.use(Vuex)
 
-export const mutations = {
-	setUsername(state, username) {
-		state.user.username = username
-	}
-}
-
 export default new Vuex.Store({
-	state: {
-		user: {
-			username: ''
-		}
-	},
+	state,
 	mutations,
 	actions: {
 		setUsername({ commit }, username) {
