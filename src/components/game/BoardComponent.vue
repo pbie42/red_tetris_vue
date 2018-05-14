@@ -7,32 +7,7 @@ export default {
 	props: ['id'],
 	data() {
 		return {
-			board: [
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-			],
+			board: [],
 			piece: {
 				location: { x: 0, y: 0 },
 				shape: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
@@ -96,7 +71,36 @@ export default {
 		}
 	},
 	methods: {
+		newBoard() {
+			return [
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			]
+		},
 		buildBoard() {
+			this.$refs.grid.innerHTML = ''
 			for (let i = 0; i < this.board.length; i++) {
 				if (i < 4) continue
 				const row = document.createElement('div')
@@ -115,10 +119,9 @@ export default {
 			return positions[Math.floor(Math.random() * positions.length)]
 		},
 		nextPiece() {
-			console.log(`this.piece.pieces`, this.piece.pieces)
-			console.log(`this.piece.current`, this.piece.current)
 			this.piece.piece = this.piece.pieces[this.piece.current]
 			this.piece.current++
+			this.piece.location = { x: 0, y: 0 }
 			if (this.piece.piece === 'i') this.piece.shape = this.initializeI
 			if (this.piece.piece === 'j') this.piece.shape = this.initializeJ
 			if (this.piece.piece === 'l') this.piece.shape = this.initializeL
@@ -129,16 +132,33 @@ export default {
 			this.placePiece()
 		},
 		placePiece() {
+			const prevBoard = this.board
 			const shape = this.piece.shape
-			let board = this.board
-			let y = -1
-			while (shape[++y]) {
-				let x = -1
-				while (++x < 4)
-					if (shape[y][x] === this.piece.piece)
-						board[y][x] = this.piece.piece
+			let board = this.newBoard()
+			console.log(`board before`, JSON.stringify(board))
+			let location = this.piece.location
+			console.log(`location`, JSON.stringify(location))
+			let boardY = location.y
+			if (boardY + 4 > 24) this.board = prevBoard
+			else {
+				let y = 0
+				while (shape[y] && board[y]) {
+					let boardX = location.x
+					let x = 0
+					while (x < 4) {
+						if (shape[y][x] === this.piece.piece) {
+							board[boardY][boardX] = this.piece.piece
+						}
+						x++
+						boardX++
+					}
+					y++
+					boardY++
+				}
+				console.log(`board after`, JSON.stringify(board))
+				this.board = board
 			}
-			this.board = board
+			this.buildBoard()
 		},
 		randomPiece() {
 			const pieces = ['i', 'j', 'l', 'o', 's', 't', 'z']
@@ -158,13 +178,74 @@ export default {
 			if (this.board[i][x] === 's') square.setAttribute('class', 'green')
 			if (this.board[i][x] === 't') square.setAttribute('class', 'purple')
 			if (this.board[i][x] === 'z') square.setAttribute('class', 'red')
+		},
+		movePieceDown() {
+			const shape = this.piece.shape
+			let board = this.board
+			if (this.piece.location.y + 1 <= 20) {
+				this.piece.location = {
+					...this.piece.location,
+					y: (this.piece.location.y += 1)
+				}
+			} else this.nextPiece()
+			console.log(`this.piece.location`, JSON.stringify(this.piece.location))
+			this.placePiece()
+		},
+		calcPieceEnd() {
+			let end = 0
+			let x = 0
+			while (x < 4) {
+				let y = 0
+				while (y < 4) {
+					console.log(`x`, x)
+					if (this.piece.shape[y][x] === this.piece.piece) end = x
+					y++
+				}
+				x++
+			}
+			return 4 - end
+		},
+		movePieceRight() {
+			let plus = this.calcPieceEnd()
+			console.log(`plus`, plus)
+			const shape = this.piece.shape
+			let board = this.board
+			if (this.piece.location.x + 6 - plus <= 10) {
+				this.piece.location = {
+					...this.piece.location,
+					x: (this.piece.location.x += 1)
+				}
+			}
+			console.log(`this.piece.location`, JSON.stringify(this.piece.location))
+			this.placePiece()
+		},
+		movePieceLeft() {
+			const shape = this.piece.shape
+			let board = this.board
+			if (this.piece.location.x - 1 >= 0) {
+				this.piece.location = {
+					...this.piece.location,
+					x: (this.piece.location.x -= 1)
+				}
+			}
+			console.log(`this.piece.location`, JSON.stringify(this.piece.location))
+			this.placePiece()
+		},
+		handleKeydown(event) {
+			console.log(`KeyDown`)
+			if (event.keyCode === 37) this.movePieceLeft()
+			if (event.keyCode === 38) console.log(`up`)
+			if (event.keyCode === 39) this.movePieceRight()
+			if (event.keyCode === 40) this.movePieceDown()
 		}
 	},
 	mounted() {
-		console.log(`happening`)
 		this.pieceOrder()
 		this.buildBoard()
-		console.log(`this.pieces`, this.piece)
+		window.addEventListener('keydown', e => this.handleKeydown(e))
+	},
+	beforeDestroy() {
+		window.removeEventListener('keydown', e => this.handleKeydown(e))
 	}
 }
 </script>
