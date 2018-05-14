@@ -35,7 +35,7 @@ export default {
 	computed: {
 		...mapGetters(['users']),
 		verifyUsername() {
-			const index = this.users().findIndex(
+			const index = this.users.findIndex(
 				user => this.username === user.username
 			)
 			if (index >= 0) return false
@@ -60,18 +60,20 @@ export default {
 		},
 		setSubmitError() {
 			this.error = true
+			this.username = ''
 		},
 		submitUsername() {
-			if (this.username && this.verifyUsername()) {
+			if (this.username && this.verifyUsername) {
 				this.setUsername(this.username)
 				this.addUser(this.username)
 				this.$emit('pageChange')
 				const delayRouteChange = () => {
-					this.$router.go('/lobby')
+					console.log(`this.username`, this.username)
+					this.$router.push('/test_room[' + this.username + ']')
+					this.username = ''
 				}
 				setTimeout(delayRouteChange, 800)
 			} else this.setSubmitError()
-			this.username = ''
 		}
 	},
 	mounted() {
