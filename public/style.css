@@ -614,6 +614,27 @@ p {
   width: 100%;
   border: solid #ccc 0.5px;
 }
+.container-game .container-boards .players-others #others-grid > div .orange {
+  background: #ffa500;
+}
+.container-game .container-boards .players-others #others-grid > div .cyan {
+  background: #0ff;
+}
+.container-game .container-boards .players-others #others-grid > div .blue {
+  background: #00f;
+}
+.container-game .container-boards .players-others #others-grid > div .yellow {
+  background: #ff0;
+}
+.container-game .container-boards .players-others #others-grid > div .green {
+  background: #008000;
+}
+.container-game .container-boards .players-others #others-grid > div .purple {
+  background: #800080;
+}
+.container-game .container-boards .players-others #others-grid > div .red {
+  background: #f00;
+}
 .container-game .container-boards .player-main {
   background: rgba(34,34,44,0.5);
   height: 78vh;

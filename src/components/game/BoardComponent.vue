@@ -20,52 +20,288 @@ export default {
 	computed: {
 		initializeI() {
 			const positions = [
-				[['i', 0, 0, 0], ['i', 0, 0, 0], ['i', 0, 0, 0], ['i', 0, 0, 0]],
-				[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], ['i', 'i', 'i', 'i']]
+				{
+					position: 0,
+					shape: [
+						[0, 0, 0, 0],
+						['i', 'i', 'i', 'i'],
+						[0, 0, 0, 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 1,
+					shape: [
+						[0, 0, 'i', 0],
+						[0, 0, 'i', 0],
+						[0, 0, 'i', 0],
+						[0, 0, 'i', 0]
+					]
+				},
+				{
+					position: 2,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 0, 0, 0],
+						['i', 'i', 'i', 'i'],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 3,
+					shape: [
+						[0, 'i', 0, 0],
+						[0, 'i', 0, 0],
+						[0, 'i', 0, 0],
+						[0, 'i', 0, 0]
+					]
+				}
 			]
-			return positions[Math.floor(Math.random() * positions.length)]
+			return this.selectPosition(positions)
 		},
 		initializeJ() {
 			const positions = [
-				[[0, 0, 0, 0], [0, 'j', 0, 0], [0, 'j', 0, 0], ['j', 'j', 0, 0]],
-				[[0, 0, 0, 0], ['j', 'j', 0, 0], ['j', 0, 0, 0], ['j', 0, 0, 0]],
-				[[0, 0, 0, 0], [0, 0, 0, 0], ['j', 0, 0, 0], ['j', 'j', 'j', 0]],
-				[[0, 0, 0, 0], [0, 0, 0, 0], ['j', 'j', 'j', 0], [0, 'j', 0, 0]]
+				{
+					position: 0,
+					shape: [
+						[0, 0, 0, 0],
+						['j', 0, 0, 0],
+						['j', 'j', 'j', 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 1,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 'j', 'j', 0],
+						[0, 'j', 0, 0],
+						[0, 'j', 0, 0]
+					]
+				},
+				{
+					position: 2,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 0, 0, 0],
+						['j', 'j', 'j', 0],
+						[0, 'j', 0, 0]
+					]
+				},
+				{
+					position: 3,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 'j', 0, 0],
+						[0, 'j', 0, 0],
+						['j', 'j', 0, 0]
+					]
+				}
 			]
 			return this.selectPosition(positions)
 		},
 		initializeL() {
 			const positions = [
-				[[0, 0, 0, 0], ['l', 0, 0, 0], ['l', 0, 0, 0], ['l', 'l', 0, 0]],
-				[[0, 0, 0, 0], [0, 0, 0, 0], ['l', 'l', 'l', 0], ['l', 0, 0, 0]],
-				[[0, 0, 0, 0], ['l', 'l', 0, 0], [0, 'l', 0, 0], [0, 'l', 0, 0]],
-				[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 'l', 0], ['l', 'l', 'l', 0]]
+				{
+					position: 0,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 0, 'l', 0],
+						['l', 'l', 'l', 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 1,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 'l', 0, 0],
+						[0, 'l', 0, 0],
+						[0, 'l', 'l', 0]
+					]
+				},
+				{
+					position: 2,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 0, 0, 0],
+						['l', 'l', 'l', 0],
+						['l', 0, 0, 0]
+					]
+				},
+				{
+					position: 3,
+					shape: [
+						[0, 0, 0, 0],
+						['l', 'l', 0, 0],
+						[0, 'l', 0, 0],
+						[0, 'l', 0, 0]
+					]
+				}
 			]
 			return this.selectPosition(positions)
 		},
 		initializeO() {
-			return [[0, 0, 0, 0], [0, 0, 0, 0], ['o', 'o', 0, 0], ['o', 'o', 0, 0]]
+			const positions = [
+				{
+					position: 0,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 'o', 'o', 0],
+						[0, 'o', 'o', 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 1,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 'o', 'o', 0],
+						[0, 'o', 'o', 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 2,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 'o', 'o', 0],
+						[0, 'o', 'o', 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 3,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 'o', 'o', 0],
+						[0, 'o', 'o', 0],
+						[0, 0, 0, 0]
+					]
+				}
+			]
+			return this.selectPosition(positions)
 		},
 		initializeS() {
 			const positions = [
-				[[0, 0, 0, 0], [0, 0, 0, 0], [0, 's', 's', 0], ['s', 's', 0, 0]],
-				[[0, 0, 0, 0], ['s', 0, 0, 0], ['s', 's', 0, 0], [0, 's', 0, 0]]
+				{
+					position: 0,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 's', 's', 0],
+						['s', 's', 0, 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 1,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 's', 0, 0],
+						[0, 's', 's', 0],
+						[0, 0, 's', 0]
+					]
+				},
+				{
+					position: 2,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 0, 0, 0],
+						[0, 's', 's', 0],
+						['s', 's', 0, 0]
+					]
+				},
+				{
+					position: 3,
+					shape: [
+						[0, 0, 0, 0],
+						['s', 0, 0, 0],
+						['s', 's', 0, 0],
+						[0, 's', 0, 0]
+					]
+				}
 			]
 			return this.selectPosition(positions)
 		},
 		initializeT() {
 			const positions = [
-				[[0, 0, 0, 0], [0, 0, 0, 0], [0, 't', 0, 0], ['t', 't', 't', 0]],
-				[[0, 0, 0, 0], ['t', 0, 0, 0], ['t', 't', 0, 0], ['t', 0, 0, 0]],
-				[[0, 0, 0, 0], [0, 't', 0, 0], ['t', 't', 0, 0], [0, 't', 0, 0]],
-				[[0, 0, 0, 0], [0, 0, 0, 0], ['t', 't', 't', 0], [0, 't', 0, 0]]
+				{
+					position: 0,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 't', 0, 0],
+						['t', 't', 't', 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 1,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 't', 0, 0],
+						[0, 't', 't', 0],
+						[0, 't', 0, 0]
+					]
+				},
+				{
+					position: 2,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 0, 0, 0],
+						['t', 't', 't', 0],
+						[0, 't', 0, 0]
+					]
+				},
+				{
+					position: 3,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 't', 0, 0],
+						['t', 't', 0, 0],
+						[0, 't', 0, 0]
+					]
+				}
 			]
 			return this.selectPosition(positions)
 		},
 		initializeZ() {
 			const positions = [
-				[[0, 0, 0, 0], [0, 0, 0, 0], ['z', 'z', 0, 0], [0, 'z', 'z', 0]],
-				[[0, 0, 0, 0], [0, 'z', 0, 0], ['z', 'z', 0, 0], ['z', 0, 0, 0]]
+				{
+					position: 0,
+					shape: [
+						[0, 0, 0, 0],
+						['z', 'z', 0, 0],
+						[0, 'z', 'z', 0],
+						[0, 0, 0, 0]
+					]
+				},
+				{
+					position: 1,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 0, 'z', 0],
+						[0, 'z', 'z', 0],
+						[0, 'z', 0, 0]
+					]
+				},
+				{
+					position: 2,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 0, 0, 0],
+						['z', 'z', 0, 0],
+						[0, 'z', 'z', 0]
+					]
+				},
+				{
+					position: 3,
+					shape: [
+						[0, 0, 0, 0],
+						[0, 'z', 0, 0],
+						['z', 'z', 0, 0],
+						['z', 0, 0, 0]
+					]
+				}
 			]
 			return this.selectPosition(positions)
 		}
@@ -116,7 +352,7 @@ export default {
 			}
 		},
 		selectPosition(positions) {
-			return positions[Math.floor(Math.random() * positions.length)]
+			return positions[Math.floor(Math.random() * positions.length)].shape
 		},
 		nextPiece() {
 			this.piece.piece = this.piece.pieces[this.piece.current]
