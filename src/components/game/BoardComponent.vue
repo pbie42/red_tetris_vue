@@ -255,20 +255,15 @@ export default {
 			})
 		},
 		checkLines() {
-			console.log(`checking lines`)
 			let board = this.savedBoard
 			let count = 0
-			let y = 4
+			let y = 3
 			let linesToRemove = []
-			while (y < 24) {
-				let x = 0
-				while (x < 11) {
-					if (board[y][x] !== 0) count++
-					x++
-				}
+			while (++y < 24) {
+				let x = -1
+				while (++x < 11) if (board[y][x] !== 0) count++
 				if (count === 10) linesToRemove.push(y)
 				count = 0
-				y++
 			}
 			this.clearLines(linesToRemove)
 		},
