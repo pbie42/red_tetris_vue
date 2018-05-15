@@ -13,7 +13,12 @@ import {
 	positionsI
 } from '../../constants/pieces'
 
-import { calcPieceEnd, calcPieceStart, calcPieceBottom } from '../../utils/game'
+import {
+	calcPieceEnd,
+	calcPieceStart,
+	calcPieceBottom,
+	newBoard
+} from '../../utils/game'
 
 export default {
 	props: ['id'],
@@ -55,35 +60,6 @@ export default {
 		}
 	},
 	methods: {
-		newBoard() {
-			return [
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-			]
-		},
 		buildBoard() {
 			this.$refs.grid.innerHTML = ''
 			for (let i = 0; i < this.board.length; i++) {
@@ -128,9 +104,8 @@ export default {
 		},
 		placePiece() {
 			const prevBoard = this.board
-			const shape = this.piece.shape
-			let board = this.newBoard()
-			let location = this.piece.location
+			let { location, shape } = this.piece
+			let board = newBoard()
 			let boardY = location.y
 			if (this.savedBoard.length > 0) this.placePieces(board)
 			if (boardY + 4 > 26) this.board = prevBoard
@@ -194,9 +169,8 @@ export default {
 			return true
 		},
 		movePieceDown() {
-			let offset = calcPieceBottom(this.piece.shape, this.piece.piece)
-			let location = this.piece.location
-			const shape = this.piece.shape
+			let { shape, location, piece, set } = this.piece
+			let offset = calcPieceBottom(shape, piece)
 			let board = this.board
 			if (location.y - offset <= 19 && !this.piece.set) {
 				if (this.verifyPlacement({ x: location.x, y: location.y + 1 }))
@@ -210,22 +184,20 @@ export default {
 			this.placePiece()
 		},
 		movePieceRight() {
-			let offset = calcPieceEnd(this.piece.shape, this.piece.piece)
-			const shape = this.piece.shape
-			let location = this.piece.location
+			let { shape, location, piece } = this.piece
+			let offset = calcPieceEnd(shape, piece)
 			let board = this.board
-			if (location.x + 6 - offset <= 10) {
+			if (location.x + 6 - offset <= 10 && !this.piece.set) {
 				if (this.verifyPlacement({ x: location.x + 1, y: location.y }))
 					location = { ...location, x: (location.x += 1) }
 			}
 			this.placePiece()
 		},
 		movePieceLeft() {
-			let offset = calcPieceStart(this.piece.shape, this.piece.piece)
-			const shape = this.piece.shape
-			let location = this.piece.location
+			let { shape, location, piece } = this.piece
+			let offset = calcPieceStart(shape, piece)
 			let board = this.board
-			if (location.x - 1 + offset >= 0) {
+			if (location.x - 1 + offset >= 0 && !this.piece.set) {
 				if (this.verifyPlacement({ x: location.x - 1, y: location.y }))
 					location = { ...location, x: (location.x -= 1) }
 			}
