@@ -3,6 +3,16 @@
 </template>
 
 <script>
+import {
+	positionsO,
+	positionsL,
+	positionsJ,
+	positionsZ,
+	positionsT,
+	positionsS,
+	positionsI
+} from '../../constants/pieces'
+
 export default {
 	props: ['id'],
 	data() {
@@ -19,296 +29,31 @@ export default {
 	},
 	computed: {
 		initializeI() {
-			const positions = [
-				{
-					position: 0,
-					shape: [
-						[0, 0, 0, 0],
-						['i', 'i', 'i', 'i'],
-						[0, 0, 0, 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 1,
-					shape: [
-						[0, 0, 'i', 0],
-						[0, 0, 'i', 0],
-						[0, 0, 'i', 0],
-						[0, 0, 'i', 0]
-					]
-				},
-				{
-					position: 2,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 0, 0, 0],
-						['i', 'i', 'i', 'i'],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 3,
-					shape: [
-						[0, 'i', 0, 0],
-						[0, 'i', 0, 0],
-						[0, 'i', 0, 0],
-						[0, 'i', 0, 0]
-					]
-				}
-			]
-			return this.selectPosition(positions)
+			return this.selectPosition(positionsI)
 		},
 		initializeJ() {
-			const positions = [
-				{
-					position: 0,
-					shape: [
-						[0, 0, 0, 0],
-						['j', 0, 0, 0],
-						['j', 'j', 'j', 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 1,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 'j', 'j', 0],
-						[0, 'j', 0, 0],
-						[0, 'j', 0, 0]
-					]
-				},
-				{
-					position: 2,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 0, 0, 0],
-						['j', 'j', 'j', 0],
-						[0, 'j', 0, 0]
-					]
-				},
-				{
-					position: 3,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 'j', 0, 0],
-						[0, 'j', 0, 0],
-						['j', 'j', 0, 0]
-					]
-				}
-			]
-			return this.selectPosition(positions)
+			return this.selectPosition(positionsJ)
 		},
 		initializeL() {
-			const positions = [
-				{
-					position: 0,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 0, 'l', 0],
-						['l', 'l', 'l', 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 1,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 'l', 0, 0],
-						[0, 'l', 0, 0],
-						[0, 'l', 'l', 0]
-					]
-				},
-				{
-					position: 2,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 0, 0, 0],
-						['l', 'l', 'l', 0],
-						['l', 0, 0, 0]
-					]
-				},
-				{
-					position: 3,
-					shape: [
-						[0, 0, 0, 0],
-						['l', 'l', 0, 0],
-						[0, 'l', 0, 0],
-						[0, 'l', 0, 0]
-					]
-				}
-			]
-			return this.selectPosition(positions)
+			return this.selectPosition(positionsL)
 		},
 		initializeO() {
-			const positions = [
-				{
-					position: 0,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 'o', 'o', 0],
-						[0, 'o', 'o', 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 1,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 'o', 'o', 0],
-						[0, 'o', 'o', 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 2,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 'o', 'o', 0],
-						[0, 'o', 'o', 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 3,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 'o', 'o', 0],
-						[0, 'o', 'o', 0],
-						[0, 0, 0, 0]
-					]
-				}
-			]
-			return this.selectPosition(positions)
+			return this.selectPosition(positionsO)
 		},
 		initializeS() {
-			const positions = [
-				{
-					position: 0,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 's', 's', 0],
-						['s', 's', 0, 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 1,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 's', 0, 0],
-						[0, 's', 's', 0],
-						[0, 0, 's', 0]
-					]
-				},
-				{
-					position: 2,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 0, 0, 0],
-						[0, 's', 's', 0],
-						['s', 's', 0, 0]
-					]
-				},
-				{
-					position: 3,
-					shape: [
-						[0, 0, 0, 0],
-						['s', 0, 0, 0],
-						['s', 's', 0, 0],
-						[0, 's', 0, 0]
-					]
-				}
-			]
-			return this.selectPosition(positions)
+			return this.selectPosition(positionsS)
 		},
 		initializeT() {
-			const positions = [
-				{
-					position: 0,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 't', 0, 0],
-						['t', 't', 't', 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 1,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 't', 0, 0],
-						[0, 't', 't', 0],
-						[0, 't', 0, 0]
-					]
-				},
-				{
-					position: 2,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 0, 0, 0],
-						['t', 't', 't', 0],
-						[0, 't', 0, 0]
-					]
-				},
-				{
-					position: 3,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 't', 0, 0],
-						['t', 't', 0, 0],
-						[0, 't', 0, 0]
-					]
-				}
-			]
-			return this.selectPosition(positions)
+			return this.selectPosition(positionsT)
 		},
 		initializeZ() {
-			const positions = [
-				{
-					position: 0,
-					shape: [
-						[0, 0, 0, 0],
-						['z', 'z', 0, 0],
-						[0, 'z', 'z', 0],
-						[0, 0, 0, 0]
-					]
-				},
-				{
-					position: 1,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 0, 'z', 0],
-						[0, 'z', 'z', 0],
-						[0, 'z', 0, 0]
-					]
-				},
-				{
-					position: 2,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 0, 0, 0],
-						['z', 'z', 0, 0],
-						[0, 'z', 'z', 0]
-					]
-				},
-				{
-					position: 3,
-					shape: [
-						[0, 0, 0, 0],
-						[0, 'z', 0, 0],
-						['z', 'z', 0, 0],
-						['z', 0, 0, 0]
-					]
-				}
-			]
-			return this.selectPosition(positions)
+			return this.selectPosition(positionsZ)
 		}
 	},
 	methods: {
 		newBoard() {
 			return [
+				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -339,6 +84,7 @@ export default {
 			this.$refs.grid.innerHTML = ''
 			for (let i = 0; i < this.board.length; i++) {
 				if (i < 4) continue
+				if (i > 23) continue
 				const row = document.createElement('div')
 				row.setAttribute('id', `row-${i - 4}`)
 				for (let x = 0; x < this.board[i].length; x++) {
@@ -375,7 +121,7 @@ export default {
 			let location = this.piece.location
 			console.log(`location`, JSON.stringify(location))
 			let boardY = location.y
-			if (boardY + 4 > 24) this.board = prevBoard
+			if (boardY + 4 > 26) this.board = prevBoard
 			else {
 				let y = 0
 				while (shape[y] && board[y]) {
@@ -415,18 +161,6 @@ export default {
 			if (this.board[i][x] === 't') square.setAttribute('class', 'purple')
 			if (this.board[i][x] === 'z') square.setAttribute('class', 'red')
 		},
-		movePieceDown() {
-			const shape = this.piece.shape
-			let board = this.board
-			if (this.piece.location.y + 1 <= 20) {
-				this.piece.location = {
-					...this.piece.location,
-					y: (this.piece.location.y += 1)
-				}
-			} else this.nextPiece()
-			console.log(`this.piece.location`, JSON.stringify(this.piece.location))
-			this.placePiece()
-		},
 		calcPieceEnd() {
 			let end = 0
 			let x = 0
@@ -440,6 +174,53 @@ export default {
 				x++
 			}
 			return 4 - end
+		},
+		calcPieceStart() {
+			let x = 0
+			while (x < 4) {
+				let y = 0
+				while (y < 4) {
+					console.log(`x`, x)
+					if (this.piece.shape[y][x] === this.piece.piece) return x
+					y++
+				}
+				x++
+			}
+		},
+		calcPieceBottom() {
+			let bottom = 0
+			let y = 0
+			while (y < 4) {
+				let x = 0
+				while (x < 4) {
+					console.log(`x`, x)
+					if (this.piece.shape[y][x] === this.piece.piece) bottom = y
+					x++
+				}
+				y++
+			}
+			return 3 - bottom
+		},
+		movePieceDown() {
+			let bottom = this.calcPieceBottom()
+			console.log(`bottom`, bottom)
+			console.log(
+				`this.piece.location before`,
+				JSON.stringify(this.piece.location)
+			)
+			const shape = this.piece.shape
+			let board = this.board
+			if (this.piece.location.y - bottom <= 19) {
+				this.piece.location = {
+					...this.piece.location,
+					y: (this.piece.location.y += 1)
+				}
+			} else this.nextPiece()
+			console.log(
+				`this.piece.location after`,
+				JSON.stringify(this.piece.location)
+			)
+			this.placePiece()
 		},
 		movePieceRight() {
 			let plus = this.calcPieceEnd()
@@ -456,9 +237,10 @@ export default {
 			this.placePiece()
 		},
 		movePieceLeft() {
+			let minus = this.calcPieceStart()
 			const shape = this.piece.shape
 			let board = this.board
-			if (this.piece.location.x - 1 >= 0) {
+			if (this.piece.location.x - 1 + minus >= 0) {
 				this.piece.location = {
 					...this.piece.location,
 					x: (this.piece.location.x -= 1)
@@ -487,5 +269,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
