@@ -248,17 +248,45 @@ export default {
 					break
 			}
 		},
+		clearLines(linesToRemove) {
+			linesToRemove.forEach(line => {
+				this.savedBoard.splice(line, 1)
+				this.savedBoard.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+			})
+		},
+		checkLines() {
+			console.log(`checking lines`)
+			let board = this.savedBoard
+			let count = 0
+			let y = 4
+			let linesToRemove = []
+			while (y < 24) {
+				let x = 0
+				while (x < 11) {
+					if (board[y][x] !== 0) count++
+					x++
+				}
+				if (count === 10) linesToRemove.push(y)
+				count = 0
+				y++
+			}
+			this.clearLines(linesToRemove)
+		},
 		movePieceDown() {
 			let { shape, location, piece, set } = this.piece
 			let offset = calcPieceBottom(shape, piece)
-			let board = this.board
 			if (location.y - offset <= 19 && !this.piece.set) {
 				if (this.verifyPlacement({ x: location.x, y: location.y + 1 }, shape))
 					location = { ...location, y: (location.y += 1) }
-				else this.piece.set = true
+				else {
+					this.piece.set = true
+					this.savedBoard = this.board.slice(0)
+					if (this.savedBoard.length > 0) this.checkLines()
+				}
 			} else {
 				this.piece.set = false
 				this.savedBoard = this.board.slice(0)
+				if (this.savedBoard.length > 0) this.checkLines()
 				this.nextPiece()
 			}
 			this.placePiece()
@@ -266,7 +294,6 @@ export default {
 		movePieceRight() {
 			let { shape, location, piece } = this.piece
 			let offset = calcPieceEnd(shape, piece)
-			let board = this.board
 			if (location.x + 6 - offset <= 10 && !this.piece.set) {
 				if (this.verifyPlacement({ x: location.x + 1, y: location.y }, shape))
 					location = { ...location, x: (location.x += 1) }
@@ -276,7 +303,6 @@ export default {
 		movePieceLeft() {
 			let { shape, location, piece } = this.piece
 			let offset = calcPieceStart(shape, piece)
-			let board = this.board
 			if (location.x - 1 + offset >= 0 && !this.piece.set) {
 				if (this.verifyPlacement({ x: location.x - 1, y: location.y }, shape))
 					location = { ...location, x: (location.x -= 1) }
