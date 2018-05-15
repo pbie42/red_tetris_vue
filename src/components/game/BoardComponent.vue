@@ -267,6 +267,15 @@ export default {
 			}
 			this.clearLines(linesToRemove)
 		},
+		checkGame() {
+			let y = -1
+			while (++y < 4) {
+				let x = -1
+				while (++x < 11) {
+					if (this.savedBoard[y][x] !== 0) console.log(`GAME OVER MANNNNNNN`)
+				}
+			}
+		},
 		movePieceDown() {
 			let { shape, location, piece, set } = this.piece
 			let offset = calcPieceBottom(shape, piece)
@@ -277,11 +286,13 @@ export default {
 					this.piece.set = true
 					this.savedBoard = this.board.slice(0)
 					if (this.savedBoard.length > 0) this.checkLines()
+					this.checkGame()
 				}
 			} else {
 				this.piece.set = false
 				this.savedBoard = this.board.slice(0)
 				if (this.savedBoard.length > 0) this.checkLines()
+				this.checkGame()
 				this.nextPiece()
 			}
 			this.placePiece()
