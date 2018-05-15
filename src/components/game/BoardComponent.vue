@@ -13,17 +13,21 @@ import {
 	positionsI
 } from '../../constants/pieces'
 
+import { calcPieceEnd, calcPieceStart, calcPieceBottom } from '../../utils/game'
+
 export default {
 	props: ['id'],
 	data() {
 		return {
 			board: [],
+			savedBoard: [],
 			piece: {
 				location: { x: 0, y: 0 },
 				shape: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]],
 				piece: '',
 				current: 0,
-				pieces: []
+				pieces: [],
+				set: false
 			}
 		}
 	},
@@ -113,14 +117,22 @@ export default {
 			if (this.piece.piece === 'z') this.piece.shape = this.initializeZ
 			this.placePiece()
 		},
+		placePieces(board) {
+			let y = -1
+			while (board[++y]) {
+				let x = -1
+				while (++x < 11)
+					if (this.savedBoard[y][x] !== 0)
+						board[y][x] = this.savedBoard[y][x]
+			}
+		},
 		placePiece() {
 			const prevBoard = this.board
 			const shape = this.piece.shape
 			let board = this.newBoard()
-			console.log(`board before`, JSON.stringify(board))
 			let location = this.piece.location
-			console.log(`location`, JSON.stringify(location))
 			let boardY = location.y
+			if (this.savedBoard.length > 0) this.placePieces(board)
 			if (boardY + 4 > 26) this.board = prevBoard
 			else {
 				let y = 0
@@ -137,7 +149,6 @@ export default {
 					y++
 					boardY++
 				}
-				console.log(`board after`, JSON.stringify(board))
 				this.board = board
 			}
 			this.buildBoard()
@@ -161,96 +172,66 @@ export default {
 			if (this.board[i][x] === 't') square.setAttribute('class', 'purple')
 			if (this.board[i][x] === 'z') square.setAttribute('class', 'red')
 		},
-		calcPieceEnd() {
-			let end = 0
-			let x = 0
-			while (x < 4) {
-				let y = 0
-				while (y < 4) {
-					console.log(`x`, x)
-					if (this.piece.shape[y][x] === this.piece.piece) end = x
-					y++
-				}
-				x++
-			}
-			return 4 - end
-		},
-		calcPieceStart() {
-			let x = 0
-			while (x < 4) {
-				let y = 0
-				while (y < 4) {
-					console.log(`x`, x)
-					if (this.piece.shape[y][x] === this.piece.piece) return x
-					y++
-				}
-				x++
-			}
-		},
-		calcPieceBottom() {
-			let bottom = 0
+		verifyPlacement(location) {
+			if (this.savedBoard.length === 0) return true
 			let y = 0
-			while (y < 4) {
+			let boardY = location.y
+			while (this.piece.shape[y] && this.savedBoard[y]) {
 				let x = 0
+				let boardX = location.x
 				while (x < 4) {
-					console.log(`x`, x)
-					if (this.piece.shape[y][x] === this.piece.piece) bottom = y
+					if (
+						this.piece.shape[y][x] === this.piece.piece &&
+						this.savedBoard[boardY][boardX] !== 0
+					)
+						return false
 					x++
+					boardX++
 				}
 				y++
+				boardY++
 			}
-			return 3 - bottom
+			return true
 		},
 		movePieceDown() {
-			let bottom = this.calcPieceBottom()
-			console.log(`bottom`, bottom)
-			console.log(
-				`this.piece.location before`,
-				JSON.stringify(this.piece.location)
-			)
+			let offset = calcPieceBottom(this.piece.shape, this.piece.piece)
+			let location = this.piece.location
 			const shape = this.piece.shape
 			let board = this.board
-			if (this.piece.location.y - bottom <= 19) {
-				this.piece.location = {
-					...this.piece.location,
-					y: (this.piece.location.y += 1)
-				}
-			} else this.nextPiece()
-			console.log(
-				`this.piece.location after`,
-				JSON.stringify(this.piece.location)
-			)
+			if (location.y - offset <= 19 && !this.piece.set) {
+				if (this.verifyPlacement({ x: location.x, y: location.y + 1 }))
+					location = { ...location, y: (location.y += 1) }
+				else this.piece.set = true
+			} else {
+				this.piece.set = false
+				this.savedBoard = this.board.slice(0)
+				this.nextPiece()
+			}
 			this.placePiece()
 		},
 		movePieceRight() {
-			let plus = this.calcPieceEnd()
-			console.log(`plus`, plus)
+			let offset = calcPieceEnd(this.piece.shape, this.piece.piece)
 			const shape = this.piece.shape
+			let location = this.piece.location
 			let board = this.board
-			if (this.piece.location.x + 6 - plus <= 10) {
-				this.piece.location = {
-					...this.piece.location,
-					x: (this.piece.location.x += 1)
-				}
+			if (location.x + 6 - offset <= 10) {
+				if (this.verifyPlacement({ x: location.x + 1, y: location.y }))
+					location = { ...location, x: (location.x += 1) }
 			}
-			console.log(`this.piece.location`, JSON.stringify(this.piece.location))
 			this.placePiece()
 		},
 		movePieceLeft() {
-			let minus = this.calcPieceStart()
+			let offset = calcPieceStart(this.piece.shape, this.piece.piece)
 			const shape = this.piece.shape
+			let location = this.piece.location
 			let board = this.board
-			if (this.piece.location.x - 1 + minus >= 0) {
-				this.piece.location = {
-					...this.piece.location,
-					x: (this.piece.location.x -= 1)
-				}
+			if (location.x - 1 + offset >= 0) {
+				if (this.verifyPlacement({ x: location.x - 1, y: location.y }))
+					location = { ...location, x: (location.x -= 1) }
 			}
-			console.log(`this.piece.location`, JSON.stringify(this.piece.location))
 			this.placePiece()
 		},
 		handleKeydown(event) {
-			console.log(`KeyDown`)
 			if (event.keyCode === 37) this.movePieceLeft()
 			if (event.keyCode === 38) console.log(`up`)
 			if (event.keyCode === 39) this.movePieceRight()
