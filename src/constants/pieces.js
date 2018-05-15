@@ -130,3 +130,69 @@ export const positionsZ = [
 		shape: [[0, 0, 0, 0], [0, 'z', 0, 0], ['z', 'z', 0, 0], ['z', 0, 0, 0]]
 	}
 ]
+export function getI(piece) {
+	const i = initializeI()
+	piece.shape = i.shape
+	piece.position = i.position
+}
+export function getJ(piece) {
+	const j = initializeJ()
+	piece.shape = j.shape
+	piece.position = j.position
+}
+export function getL(piece) {
+	const l = initializeL()
+	piece.shape = l.shape
+	piece.position = l.position
+}
+export function getO(piece) {
+	const o = initializeO()
+	piece.shape = o.shape
+	piece.position = o.position
+}
+export function getS(piece) {
+	const s = initializeS()
+	piece.shape = s.shape
+	piece.position = s.position
+}
+export function getT(piece) {
+	const t = initializeT()
+	piece.shape = t.shape
+	piece.position = t.position
+}
+export function getZ(piece) {
+	const z = initializeZ()
+	piece.shape = z.shape
+	piece.position = z.position
+}
+
+export function initializeI() {
+	return selectPosition(positionsI)
+}
+export function initializeJ() {
+	return selectPosition(positionsJ)
+}
+export function initializeL() {
+	return selectPosition(positionsL)
+}
+export function initializeO() {
+	return selectPosition(positionsO)
+}
+export function initializeS() {
+	return selectPosition(positionsS)
+}
+export function initializeT() {
+	return selectPosition(positionsT)
+}
+export function initializeZ() {
+	return selectPosition(positionsZ)
+}
+
+export function selectPosition(positions) {
+	return positions[Math.floor(Math.random() * positions.length)]
+}
+
+export function randomPiece() {
+	const pieces = ['i', 'j', 'l', 'o', 's', 't', 'z']
+	return pieces[Math.floor(Math.random() * pieces.length)]
+}

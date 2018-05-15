@@ -4,13 +4,28 @@
 
 <script>
 import {
-	positionsO,
-	positionsL,
+	getI,
+	getJ,
+	getL,
+	getO,
+	getS,
+	getT,
+	getZ,
+	initializeI,
+	initializeJ,
+	initializeL,
+	initializeO,
+	initializeS,
+	initializeT,
+	initializeZ,
+	positionsI,
 	positionsJ,
-	positionsZ,
-	positionsT,
+	positionsL,
+	positionsO,
 	positionsS,
-	positionsI
+	positionsT,
+	positionsZ,
+	randomPiece
 } from '../../constants/pieces'
 
 import {
@@ -32,33 +47,12 @@ export default {
 				piece: '',
 				current: 0,
 				pieces: [],
+				position: 0,
 				set: false
 			}
 		}
 	},
-	computed: {
-		initializeI() {
-			return this.selectPosition(positionsI)
-		},
-		initializeJ() {
-			return this.selectPosition(positionsJ)
-		},
-		initializeL() {
-			return this.selectPosition(positionsL)
-		},
-		initializeO() {
-			return this.selectPosition(positionsO)
-		},
-		initializeS() {
-			return this.selectPosition(positionsS)
-		},
-		initializeT() {
-			return this.selectPosition(positionsT)
-		},
-		initializeZ() {
-			return this.selectPosition(positionsZ)
-		}
-	},
+	computed: {},
 	methods: {
 		buildBoard() {
 			this.$refs.grid.innerHTML = ''
@@ -78,19 +72,20 @@ export default {
 			}
 		},
 		selectPosition(positions) {
-			return positions[Math.floor(Math.random() * positions.length)].shape
+			return positions[Math.floor(Math.random() * positions.length)]
 		},
 		nextPiece() {
-			this.piece.piece = this.piece.pieces[this.piece.current]
-			this.piece.current++
-			this.piece.location = { x: 0, y: 0 }
-			if (this.piece.piece === 'i') this.piece.shape = this.initializeI
-			if (this.piece.piece === 'j') this.piece.shape = this.initializeJ
-			if (this.piece.piece === 'l') this.piece.shape = this.initializeL
-			if (this.piece.piece === 'o') this.piece.shape = this.initializeO
-			if (this.piece.piece === 's') this.piece.shape = this.initializeS
-			if (this.piece.piece === 't') this.piece.shape = this.initializeT
-			if (this.piece.piece === 'z') this.piece.shape = this.initializeZ
+			let piece = this.piece
+			piece.piece = piece.pieces[piece.current]
+			piece.current++
+			piece.location = { x: 0, y: 0 }
+			if (piece.piece === 'i') getI(piece)
+			if (piece.piece === 'j') getJ(piece)
+			if (piece.piece === 'l') getL(piece)
+			if (piece.piece === 'o') getO(piece)
+			if (piece.piece === 's') getS(piece)
+			if (piece.piece === 't') getT(piece)
+			if (piece.piece === 'z') getZ(piece)
 			this.placePiece()
 		},
 		placePieces(board) {
@@ -128,13 +123,9 @@ export default {
 			}
 			this.buildBoard()
 		},
-		randomPiece() {
-			const pieces = ['i', 'j', 'l', 'o', 's', 't', 'z']
-			return pieces[Math.floor(Math.random() * pieces.length)]
-		},
 		pieceOrder() {
 			const pieces = []
-			for (let i = 0; i < 100; i++) pieces.push(this.randomPiece())
+			for (let i = 0; i < 100; i++) pieces.push(randomPiece())
 			this.piece.pieces = pieces
 			this.nextPiece()
 		},
