@@ -47,7 +47,7 @@ export const positionsJ = [
 	},
 	{
 		position: 2,
-		shape: [[0, 0, 0, 0], [0, 0, 0, 0], ['j', 'j', 'j', 0], [0, 'j', 0, 0]]
+		shape: [[0, 0, 0, 0], [0, 0, 0, 0], ['j', 'j', 'j', 0], [0, 0, 'j', 0]]
 	},
 	{
 		position: 3,

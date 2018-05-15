@@ -93,8 +93,7 @@ export default {
 			while (board[++y]) {
 				let x = -1
 				while (++x < 11)
-					if (this.savedBoard[y][x] !== 0)
-						board[y][x] = this.savedBoard[y][x]
+					if (this.savedBoard[y][x] !== 0) board[y][x] = this.savedBoard[y][x]
 			}
 		},
 		placePiece() {
@@ -151,12 +150,10 @@ export default {
 				let x = 0
 				let boardX = location.x
 				while (x < 4) {
-					console.log(`boardX`, boardX)
 					if (
 						shape[y][x] === this.piece.piece &&
 						this.savedBoard[boardY][boardX] !== 0
 					) {
-						console.log(`not valid`)
 						return false
 					}
 					x++
@@ -167,41 +164,84 @@ export default {
 			}
 			return true
 		},
-		rotatePiece() {
-			let index, position
+		verifyRotation(location, newPosition, offset) {
+			return (
+				this.verifyPlacement(location, newPosition.shape) &&
+				location.x + 6 - offset.end <= 11 &&
+				location.x - 1 + offset.start >= -1
+			)
+		},
+		doRotation(position, index, location) {
+			this.piece.location = location
+			this.piece.shape = position.shape
+			this.piece.position = index
+			this.placePiece()
+			return true
+		},
+		setupLocations(location) {
+			const locations = [
+				location,
+				{ x: location.x + 1, y: location.y },
+				{ x: location.x - 1, y: location.y }
+			]
+			const locationsI = [
+				{ x: location.x + 2, y: location.y },
+				{ x: location.x - 2, y: location.y }
+			]
+			return { locations, locationsI }
+		},
+		getOffsets(piece, shape) {
+			const start = calcPieceStart(shape, piece)
+			const end = calcPieceEnd(shape, piece)
+			return { start, end }
+		},
+		rotatePiece(positions) {
+			let { piece, position, location } = this.piece
+			let index, newPosition, offset
+			let success = false
+			const locations = this.setupLocations(location)
+			if ((index = position + 1) > 3) index = 0
+			newPosition = positions[index]
+			offset = this.getOffsets(piece, newPosition.shape)
+
+			success = locations.locations.some(location => {
+				let success = false
+				if (this.verifyRotation(location, newPosition, offset))
+					success = this.doRotation(newPosition, index, location)
+				return success
+			})
+
+			if (piece === 'i' && !success) {
+				locations.locationsI.some(location => {
+					let success = false
+					if (this.verifyRotation(location, newPosition, offset))
+						success = this.doRotation(newPosition, index, location)
+					return success
+				})
+			}
+		},
+		rotatePieces() {
 			switch (this.piece.piece) {
-				// case 'i':
-				// case 'j':
-				// case 'l':
-				// case 'o':
-				// case 's':
-				// case 't':
 				case 'i':
-					if ((index = this.piece.position + 1) > 3) index = 0
-					position = positionsI[index]
-					console.log(`this.piece.shape`, JSON.stringify(this.piece.shape))
-					console.log(`shape`, JSON.stringify(position))
-					console.log(
-						`this.piece.location`,
-						JSON.stringify(this.piece.location)
-					)
-					let offsetStart = calcPieceStart(
-						position.shape,
-						this.piece.piece
-					)
-					let offsetEnd = calcPieceEnd(position.shape, this.piece.piece)
-					if (
-						this.verifyPlacement(this.piece.location, position.shape) &&
-						this.piece.location.x + 6 - offsetEnd <= 11 &&
-						this.piece.location.x - 1 + offsetStart >= -1
-					) {
-						console.log(`valid rotation`)
-						this.piece.shape = position.shape
-						this.piece.position = index
-						this.placePiece()
-					}
-					console.log(`this.piece.shape`, JSON.stringify(this.piece.shape))
-					console.log(`shape`, JSON.stringify(position.shape))
+					this.rotatePiece(positionsI)
+					break
+				case 'j':
+					this.rotatePiece(positionsJ)
+					break
+				case 'l':
+					this.rotatePiece(positionsL)
+					break
+				case 'o':
+					this.rotatePiece(positionsO)
+					break
+				case 's':
+					this.rotatePiece(positionsS)
+					break
+				case 't':
+					this.rotatePiece(positionsT)
+					break
+				case 'z':
+					this.rotatePiece(positionsZ)
 					break
 
 				default:
@@ -213,9 +253,7 @@ export default {
 			let offset = calcPieceBottom(shape, piece)
 			let board = this.board
 			if (location.y - offset <= 19 && !this.piece.set) {
-				if (
-					this.verifyPlacement({ x: location.x, y: location.y + 1 }, shape)
-				)
+				if (this.verifyPlacement({ x: location.x, y: location.y + 1 }, shape))
 					location = { ...location, y: (location.y += 1) }
 				else this.piece.set = true
 			} else {
@@ -230,9 +268,7 @@ export default {
 			let offset = calcPieceEnd(shape, piece)
 			let board = this.board
 			if (location.x + 6 - offset <= 10 && !this.piece.set) {
-				if (
-					this.verifyPlacement({ x: location.x + 1, y: location.y }, shape)
-				)
+				if (this.verifyPlacement({ x: location.x + 1, y: location.y }, shape))
 					location = { ...location, x: (location.x += 1) }
 			}
 			this.placePiece()
@@ -242,16 +278,14 @@ export default {
 			let offset = calcPieceStart(shape, piece)
 			let board = this.board
 			if (location.x - 1 + offset >= 0 && !this.piece.set) {
-				if (
-					this.verifyPlacement({ x: location.x - 1, y: location.y }, shape)
-				)
+				if (this.verifyPlacement({ x: location.x - 1, y: location.y }, shape))
 					location = { ...location, x: (location.x -= 1) }
 			}
 			this.placePiece()
 		},
 		handleKeydown(event) {
 			if (event.keyCode === 37) this.movePieceLeft()
-			if (event.keyCode === 38) this.rotatePiece()
+			if (event.keyCode === 38) this.rotatePieces()
 			if (event.keyCode === 39) this.movePieceRight()
 			if (event.keyCode === 40) this.movePieceDown()
 		}
