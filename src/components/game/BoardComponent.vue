@@ -100,6 +100,8 @@ export default {
 		placePiece() {
 			const prevBoard = this.board
 			let { location, shape } = this.piece
+			// console.log(`shape`, JSON.stringify(shape))
+			// console.log(`piece`, JSON.stringify(this.piece.piece))
 			let board = newBoard()
 			let boardY = location.y
 			if (this.savedBoard.length > 0) this.placePieces(board)
@@ -110,7 +112,9 @@ export default {
 					let boardX = location.x
 					let x = 0
 					while (x < 4) {
+						// console.log(`x`, x)
 						if (shape[y][x] === this.piece.piece) {
+							// console.log(`found a match!`)
 							board[boardY][boardX] = this.piece.piece
 						}
 						x++
@@ -121,6 +125,7 @@ export default {
 				}
 				this.board = board
 			}
+			// console.log(`this.board`, JSON.stringify(this.board))
 			this.buildBoard()
 		},
 		pieceOrder() {
@@ -138,19 +143,22 @@ export default {
 			if (this.board[i][x] === 't') square.setAttribute('class', 'purple')
 			if (this.board[i][x] === 'z') square.setAttribute('class', 'red')
 		},
-		verifyPlacement(location) {
+		verifyPlacement(location, shape) {
 			if (this.savedBoard.length === 0) return true
 			let y = 0
 			let boardY = location.y
-			while (this.piece.shape[y] && this.savedBoard[y]) {
+			while (shape[y] && this.savedBoard[y]) {
 				let x = 0
 				let boardX = location.x
 				while (x < 4) {
+					console.log(`boardX`, boardX)
 					if (
-						this.piece.shape[y][x] === this.piece.piece &&
+						shape[y][x] === this.piece.piece &&
 						this.savedBoard[boardY][boardX] !== 0
-					)
+					) {
+						console.log(`not valid`)
 						return false
+					}
 					x++
 					boardX++
 				}
@@ -159,12 +167,55 @@ export default {
 			}
 			return true
 		},
+		rotatePiece() {
+			let index, position
+			switch (this.piece.piece) {
+				// case 'i':
+				// case 'j':
+				// case 'l':
+				// case 'o':
+				// case 's':
+				// case 't':
+				case 'i':
+					if ((index = this.piece.position + 1) > 3) index = 0
+					position = positionsI[index]
+					console.log(`this.piece.shape`, JSON.stringify(this.piece.shape))
+					console.log(`shape`, JSON.stringify(position))
+					console.log(
+						`this.piece.location`,
+						JSON.stringify(this.piece.location)
+					)
+					let offsetStart = calcPieceStart(
+						position.shape,
+						this.piece.piece
+					)
+					let offsetEnd = calcPieceEnd(position.shape, this.piece.piece)
+					if (
+						this.verifyPlacement(this.piece.location, position.shape) &&
+						this.piece.location.x + 6 - offsetEnd <= 11 &&
+						this.piece.location.x - 1 + offsetStart >= -1
+					) {
+						console.log(`valid rotation`)
+						this.piece.shape = position.shape
+						this.piece.position = index
+						this.placePiece()
+					}
+					console.log(`this.piece.shape`, JSON.stringify(this.piece.shape))
+					console.log(`shape`, JSON.stringify(position.shape))
+					break
+
+				default:
+					break
+			}
+		},
 		movePieceDown() {
 			let { shape, location, piece, set } = this.piece
 			let offset = calcPieceBottom(shape, piece)
 			let board = this.board
 			if (location.y - offset <= 19 && !this.piece.set) {
-				if (this.verifyPlacement({ x: location.x, y: location.y + 1 }))
+				if (
+					this.verifyPlacement({ x: location.x, y: location.y + 1 }, shape)
+				)
 					location = { ...location, y: (location.y += 1) }
 				else this.piece.set = true
 			} else {
@@ -179,7 +230,9 @@ export default {
 			let offset = calcPieceEnd(shape, piece)
 			let board = this.board
 			if (location.x + 6 - offset <= 10 && !this.piece.set) {
-				if (this.verifyPlacement({ x: location.x + 1, y: location.y }))
+				if (
+					this.verifyPlacement({ x: location.x + 1, y: location.y }, shape)
+				)
 					location = { ...location, x: (location.x += 1) }
 			}
 			this.placePiece()
@@ -189,14 +242,16 @@ export default {
 			let offset = calcPieceStart(shape, piece)
 			let board = this.board
 			if (location.x - 1 + offset >= 0 && !this.piece.set) {
-				if (this.verifyPlacement({ x: location.x - 1, y: location.y }))
+				if (
+					this.verifyPlacement({ x: location.x - 1, y: location.y }, shape)
+				)
 					location = { ...location, x: (location.x -= 1) }
 			}
 			this.placePiece()
 		},
 		handleKeydown(event) {
 			if (event.keyCode === 37) this.movePieceLeft()
-			if (event.keyCode === 38) console.log(`up`)
+			if (event.keyCode === 38) this.rotatePiece()
 			if (event.keyCode === 39) this.movePieceRight()
 			if (event.keyCode === 40) this.movePieceDown()
 		}
